@@ -1,26 +1,31 @@
 import React, { useEffect, useState } from 'react';
-import { Sun, Moon, Palette, History, RotateCcw, Share2, Sparkles, Chrome } from 'lucide-react';
+import { Sun, Moon, Palette, History, RotateCcw, Share2, Sparkles, Chrome, Cloud } from 'lucide-react';
+import { User } from 'firebase/auth';
 import { ThemeConfig, ThemeMode, ThemeColor } from '../types';
 
 interface Props {
   theme: ThemeConfig;
   themeMode: ThemeMode;
+  driveUser: User | null;
   onToggleThemeMode: () => void;
   onOpenColorModal: () => void;
   onOpenHistoryModal: () => void;
   onOpenShareModal: () => void;
   onOpenChromeModal: () => void;
+  onOpenGoogleDriveModal: () => void;
   onResetBill: () => void;
 }
 
 export const Header: React.FC<Props> = ({
   theme,
   themeMode,
+  driveUser,
   onToggleThemeMode,
   onOpenColorModal,
   onOpenHistoryModal,
   onOpenShareModal,
   onOpenChromeModal,
+  onOpenGoogleDriveModal,
   onResetBill,
 }) => {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
@@ -101,6 +106,27 @@ export const Header: React.FC<Props> = ({
           >
             <Chrome className="w-3.5 h-3.5 text-amber-500" />
             <span className="hidden sm:inline">Chrome</span>
+          </button>
+
+          {/* Google Drive Button */}
+          <button
+            type="button"
+            onClick={onOpenGoogleDriveModal}
+            className="relative flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-700 font-bold text-xs transition-colors cursor-pointer"
+            title="Save and load bills with Google Drive"
+          >
+            <svg className="w-3.5 h-3.5 shrink-0" viewBox="0 0 87.3 78" xmlns="http://www.w3.org/2000/svg">
+              <path d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8H0c0 1.55.4 3.1 1.2 4.5z" fill="#0066da"/>
+              <path d="M43.65 25 29.9 1.2c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44C.4 49.9 0 51.45 0 53h27.5z" fill="#00ac47"/>
+              <path d="M73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5H59.8l5.85 10.15z" fill="#ea4335"/>
+              <path d="M43.65 25 57.4 1.2C56.05.4 54.5 0 52.95 0H34.35c-1.55 0-3.1.4-4.45 1.2z" fill="#00832d"/>
+              <path d="m59.8 53-16.15-28H16.15l13.75 23.8 2.3 4.2h27.6z" fill="#2684fc"/>
+              <path d="M73.4 26.5 60.7 4.5c-.8-1.4-1.95-2.5-3.3-3.3L43.65 25l16.15 28h27.5c0-1.55-.4-3.1-1.2-4.5z" fill="#ffba00"/>
+            </svg>
+            <span className="hidden sm:inline">Drive</span>
+            {driveUser && (
+              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-slate-900" title="Connected to Google Drive" />
+            )}
           </button>
 
           {/* Dinner History Button */}

@@ -4,8 +4,7 @@ import { Dices, Sparkles, Percent, Receipt } from 'lucide-react';
 import { BillState, Member, ThemeConfig } from '../types';
 import { formatMoney } from '../utils/currency';
 import { DoodleCheers } from './DoodleIcons';
-
-const TOAST_IMG = '/src/assets/images/celebration_toast_cheers_1791392962517.jpg';
+import toastImg from '../assets/images/celebration_toast_cheers_1791392962517.jpg';
 
 interface Props {
   billState: BillState;
@@ -94,9 +93,12 @@ export const GamifiedTipCalculator: React.FC<Props> = ({
       {/* Step Header */}
       <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
         <div className="flex items-center gap-3">
-          <div className="w-11 h-11 rounded-2xl overflow-hidden border border-amber-500/30 shadow-xs shrink-0 hidden xs:block">
+          <div className="w-11 h-11 rounded-2xl overflow-hidden border border-amber-500/30 shadow-xs shrink-0 hidden xs:block bg-amber-500/10">
             <img
-              src={TOAST_IMG}
+              src={toastImg}
+              onError={(e) => {
+                e.currentTarget.src = '/images/toast-cheers.jpg';
+              }}
               alt="Celebration Toast Cheers"
               className="w-full h-full object-cover"
               referrerPolicy="no-referrer"

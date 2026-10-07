@@ -36,6 +36,9 @@ import { ThemeSelector } from './components/ThemeSelector';
 import { HistoryDrawer } from './components/HistoryDrawer';
 import { MobileStickyBar } from './components/MobileStickyBar';
 import { ChromeExportModal } from './components/ChromeExportModal';
+import { GoogleDriveModal } from './components/GoogleDriveModal';
+import { initAuth } from './utils/firebaseAuth';
+import { User } from 'firebase/auth';
 
 export default function App() {
   // 1. State
@@ -52,8 +55,19 @@ export default function App() {
   const [isThemeModalOpen, setIsThemeModalOpen] = useState(false);
   const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
   const [isChromeModalOpen, setIsChromeModalOpen] = useState(false);
+  const [isGoogleDriveModalOpen, setIsGoogleDriveModalOpen] = useState(false);
+  const [driveUser, setDriveUser] = useState<User | null>(null);
   const [isItemsOpen, setIsItemsOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  // Monitor Google Drive authentication state
+  useEffect(() => {
+    const unsub = initAuth(
+      (user) => setDriveUser(user),
+      () => setDriveUser(null)
+    );
+    return () => unsub();
+  }, []);
 
   // Compute active theme
   const currentTheme = useMemo(
@@ -248,11 +262,13 @@ export default function App() {
       <Header
         theme={currentTheme}
         themeMode={themeMode}
+        driveUser={driveUser}
         onToggleThemeMode={handleToggleThemeMode}
         onOpenColorModal={() => setIsThemeModalOpen(true)}
         onOpenHistoryModal={() => setIsHistoryModalOpen(true)}
         onOpenShareModal={() => setIsShareModalOpen(true)}
         onOpenChromeModal={() => setIsChromeModalOpen(true)}
+        onOpenGoogleDriveModal={() => setIsGoogleDriveModalOpen(true)}
         onResetBill={handleResetBill}
       />
 
@@ -304,6 +320,7 @@ export default function App() {
             onOpenShareModal={() => setIsShareModalOpen(true)}
             onSaveToHistory={handleSaveToHistory}
             onOpenChromeModal={() => setIsChromeModalOpen(true)}
+            onOpenGoogleDriveModal={() => setIsGoogleDriveModalOpen(true)}
           />
         </section>
 
@@ -372,6 +389,19 @@ export default function App() {
           setHistory([]);
         }}
         theme={currentTheme}
+      />
+
+      <GoogleDriveModal
+        isOpen={isGoogleDriveModalOpen}
+        onClose={() => setIsGoogleDriveModalOpen(false)}
+        theme={currentTheme}
+        currentBill={billState}
+        calculationResult={result}
+        onLoadBill={(loaded) => setBillState(loaded)}
+        onShowToast={(msg) => {
+          setToastMessage(msg);
+          setTimeout(() => setToastMessage(null), 3500);
+        }}
       />
     </div>
   );

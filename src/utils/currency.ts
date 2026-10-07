@@ -109,3 +109,5 @@ export function formatMoney(amount: number, currencyCode: string = DEFAULT_CURRE
     return `${curr.symbol}${validAmount.toFixed(curr.decimalDigits)}`;
   }
 }
+
+export const formatCurrencyByCode = formatMoney;

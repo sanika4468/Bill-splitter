@@ -3,8 +3,7 @@ import { Users, Plus, Minus, CreditCard, Trash2, Edit3, Globe } from 'lucide-rea
 import { BillState, Member, ThemeConfig } from '../types';
 import { CURRENCIES, CurrencyConfig } from '../utils/currency';
 import { DoodleChai, DoodlePizza, DoodleSamosa, DoodleBurger, DoodleReceipt } from './DoodleIcons';
-
-const SPREAD_IMG = '/src/assets/images/gourmet_table_spread_1791392946799.jpg';
+import spreadImg from '../assets/images/gourmet_table_spread_1791392946799.jpg';
 
 interface Props {
   billState: BillState;
@@ -72,9 +71,12 @@ export const BillAndFriendsCard: React.FC<Props> = ({
       {/* Card Header with Editable Title & Currency Selector */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200 dark:border-slate-800">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-2xl overflow-hidden border border-amber-500/30 shadow-xs shrink-0 hidden xs:block">
+          <div className="w-12 h-12 rounded-2xl overflow-hidden border border-amber-500/30 shadow-xs shrink-0 hidden xs:block bg-amber-500/10">
             <img
-              src={SPREAD_IMG}
+              src={spreadImg}
+              onError={(e) => {
+                e.currentTarget.src = '/images/food-spread.jpg';
+              }}
               alt="Gourmet Dining Spread"
               className="w-full h-full object-cover"
               referrerPolicy="no-referrer"
