@@ -1,0 +1,6 @@
+{
+  "name": "TableTally - Friendship Dinner Bill & Tip Splitter",
+  "description": "Fast and fair bill splitter for friendship dinners with tax, custom individual tips, gamified gratuity, offline support, themes, and QR sharing.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

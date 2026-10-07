@@ -1,0 +1,19 @@
+{
+  "id": "/",
+  "name": "TableTally - Friendship Dinner Bill Splitter",
+  "short_name": "TableTally",
+  "description": "Fast and fair friendship dinner bill & tip splitter supporting India (₹) and global currencies with cute doodles.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#ea580c",
+  "background_color": "#faf6f0",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
